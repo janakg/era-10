@@ -56,7 +56,7 @@ def test(model, device, test_loader, criterion):
             data, target = data.to(device), target.to(device)
 
             output = model(data)
-            test_loss += criterion(output, target, reduction='sum').item()  # sum up batch loss
+            test_loss += criterion(output, target).item()  # sum up batch loss
 
             test_succeeded += GetCorrectPredCount(output, target)
 
