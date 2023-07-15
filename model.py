@@ -70,7 +70,7 @@ class Net(nn.Module):
         out = self.maxpool(out)
         out = out.view(out.size(0), -1)
         out = self.fc(out)
-        out = nn.Softmax(dim=1)(out)
+        # out = nn.Softmax(dim=1)(out)  # if using nn.CrossEntropyLoss as loss function, the avoid softmax function 
         return out
     
 
