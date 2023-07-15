@@ -2,23 +2,26 @@ import torch.nn as nn
 import torch.nn.functional as F
 from custom_resnet import ResBlock
 
+dropout_value_min = 0.10
+
 class Net(nn.Module):
     def __init__(self, num_classes=10):
         super(Net, self).__init__()
 
         # Prep Layer
         self.preplayer = nn.Sequential(
-            nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1),
+            nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1, bias=False),
             nn.BatchNorm2d(64),
             nn.ReLU(inplace=True)
         )
         
         # Layer 1
         self.layer1 = nn.Sequential(
-            nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=1),
+            nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=1, bias=False),
             nn.MaxPool2d(2),
             nn.BatchNorm2d(128),
-            nn.ReLU(inplace=True)
+            nn.ReLU(inplace=True),
+            nn.Dropout(dropout_value_min),
         )
         
         # Residual Block 1
@@ -26,18 +29,20 @@ class Net(nn.Module):
         
         # Layer 2
         self.layer2 = nn.Sequential(
-            nn.Conv2d(128, 256, kernel_size=3, stride=1, padding=1),
+            nn.Conv2d(128, 256, kernel_size=3, stride=1, padding=1, bias=False),
             nn.MaxPool2d(2),
             nn.BatchNorm2d(256),
-            nn.ReLU(inplace=True)
+            nn.ReLU(inplace=True),
+            nn.Dropout(dropout_value_min),
         )
         
         # Layer 3
         self.layer3 = nn.Sequential(
-            nn.Conv2d(256, 512, kernel_size=3, stride=1, padding=1),
+            nn.Conv2d(256, 512, kernel_size=3, stride=1, padding=1, bias=False),
             nn.MaxPool2d(2),
             nn.BatchNorm2d(512),
-            nn.ReLU(inplace=True)
+            nn.ReLU(inplace=True),
+            nn.Dropout(dropout_value_min),
         )
 
         # Residual Block 2
