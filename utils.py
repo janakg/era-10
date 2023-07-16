@@ -30,6 +30,7 @@ def GetCorrectPredCount(pPrediction, pLabels):
 def train(model, device, train_loader, optimizer, criterion, scheduler):
   model.train()
   pbar = tqdm(train_loader)
+  lr_values = []
 
   train_loss = 0
   train_succeeded = 0
@@ -50,13 +51,14 @@ def train(model, device, train_loader, optimizer, criterion, scheduler):
     loss.backward()
     optimizer.step()
     scheduler.step()
-    
+    lr_values.append(scheduler.get_last_lr()[0])
+
     train_succeeded += GetCorrectPredCount(pred, target)
     train_processed += len(data)
 
-    pbar.set_description(desc= f'Train: Loss={loss.item():0.4f} Batch_id={batch_idx} Accuracy={100*train_succeeded/train_processed:0.2f}')
+    pbar.set_description(desc= f'Train: Loss={loss.item():0.4f} Batch_id={batch_idx} Accuracy={100*train_succeeded/train_processed:0.2f} LR={scheduler.get_last_lr()[0]}')
   
-  return train_succeeded, train_processed, train_loss
+  return train_succeeded, train_processed, train_loss, lr_values
 
 
 def test(model, device, test_loader, criterion):
