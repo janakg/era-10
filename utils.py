@@ -55,7 +55,7 @@ def train(model, device, train_loader, optimizer, criterion):
 
     pbar.set_description(desc= f'Train: Loss={loss.item():0.4f} Batch_id={batch_idx} Accuracy={100*train_succeeded/train_processed:0.2f}')
   
-  return train_succeeded, train_processed, train_loss
+  return train_succeeded, train_processed, x
 
 
 def test(model, device, test_loader, criterion):

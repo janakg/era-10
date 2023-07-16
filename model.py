@@ -12,7 +12,8 @@ class Net(nn.Module):
         self.preplayer = nn.Sequential(
             nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1, bias=False),
             nn.BatchNorm2d(64),
-            nn.ReLU()
+            nn.ReLU(),
+            nn.Dropout(dropout_value_min),
         )
         
         # Layer 1
