@@ -7,10 +7,10 @@ class ResBlock(nn.Module):
         super(ResBlock, self).__init__()
         self.conv1 = nn.Conv2d(in_channels, in_channels, kernel_size=3, stride=1, padding=1, bias=False)
         self.bn1 = nn.BatchNorm2d(in_channels)
-        self.relu1 = nn.ReLU(inplace=True)
+        self.relu1 = nn.ReLU()
         self.conv2 = nn.Conv2d(in_channels, in_channels, kernel_size=3, stride=1, padding=1, bias=False)
         self.bn2 = nn.BatchNorm2d(in_channels)
-        self.relu2 = nn.ReLU(inplace=True)
+        self.relu2 = nn.ReLU()
         
     def forward(self, x):
         r = x

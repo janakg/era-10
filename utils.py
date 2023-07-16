@@ -1,5 +1,17 @@
 import torch
 from tqdm import tqdm
+import matplotlib.pyplot as plt
+import numpy as np
+
+def print_featuremaps_hook(self, input, output):
+      # Detach one output feature map (one channel)
+      for i in range(output.shape[1]):
+          feature_map = output[0, i].detach().cpu().numpy()
+          
+          # Plot the feature map
+          plt.figure(figsize=(3, 3))
+          plt.imshow(feature_map, cmap='gray')
+          plt.show()
 
 def show_batch_images(plt, dataloader, count=12, row = 3, col = 4):
     images, labels = next(iter(dataloader))

@@ -2,7 +2,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from custom_resnet import ResBlock
 
-dropout_value_min = 0.10
+dropout_value_min = 0.05
 
 class Net(nn.Module):
     def __init__(self, num_classes=10):
@@ -12,7 +12,7 @@ class Net(nn.Module):
         self.preplayer = nn.Sequential(
             nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1, bias=False),
             nn.BatchNorm2d(64),
-            nn.ReLU(inplace=True)
+            nn.ReLU()
         )
         
         # Layer 1
@@ -20,7 +20,7 @@ class Net(nn.Module):
             nn.Conv2d(64, 128, kernel_size=3, stride=1, padding=1, bias=False),
             nn.MaxPool2d(2),
             nn.BatchNorm2d(128),
-            nn.ReLU(inplace=True),
+            nn.ReLU(),
             nn.Dropout(dropout_value_min),
         )
         
@@ -32,7 +32,7 @@ class Net(nn.Module):
             nn.Conv2d(128, 256, kernel_size=3, stride=1, padding=1, bias=False),
             nn.MaxPool2d(2),
             nn.BatchNorm2d(256),
-            nn.ReLU(inplace=True),
+            nn.ReLU(),
             nn.Dropout(dropout_value_min),
         )
         
@@ -41,7 +41,7 @@ class Net(nn.Module):
             nn.Conv2d(256, 512, kernel_size=3, stride=1, padding=1, bias=False),
             nn.MaxPool2d(2),
             nn.BatchNorm2d(512),
-            nn.ReLU(inplace=True),
+            nn.ReLU(),
             nn.Dropout(dropout_value_min),
         )
 
@@ -53,7 +53,7 @@ class Net(nn.Module):
 
         # FC Layer
         self.fc = nn.Linear(512, num_classes)
-        
+                
     def forward(self, x):
         out = self.preplayer(x)
         
