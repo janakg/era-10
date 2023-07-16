@@ -2,6 +2,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from custom_resnet import ResBlock
 
+# Drop out is kept to avoid overfitting
 dropout_value_min = 0.03
 
 class Net(nn.Module):
@@ -70,7 +71,7 @@ class Net(nn.Module):
         out = self.maxpool(out)
         out = out.view(out.size(0), -1)
         out = self.fc(out)
-        out = F.log_softmax(out, dim=1)
+        out = F.log_softmax(out, dim=1) # we need to use log(softmax), as the cross entropy needs the log function
         return out
     
 

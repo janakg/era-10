@@ -2,6 +2,7 @@ import torch
 from torch import nn
 dropout_value_min = 0.03
 
+# Custom Resnet block only. Refer model.py file for the full model
 class ResBlock(nn.Module):
     def __init__(self, in_channels):
         super(ResBlock, self).__init__()
