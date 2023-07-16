@@ -1,6 +1,6 @@
 import torch
 from torch import nn
-dropout_value_min = 0.05
+dropout_value_min = 0.03
 
 class ResBlock(nn.Module):
     def __init__(self, in_channels):
@@ -16,13 +16,11 @@ class ResBlock(nn.Module):
         self.block2 = nn.Sequential(
             nn.Conv2d(in_channels, in_channels, kernel_size=3, stride=1, padding=1, bias=False),
             nn.BatchNorm2d(in_channels),
+            nn.ReLU(),
             nn.Dropout(dropout_value_min)
         )
 
-        self.relu =  nn.ReLU()
-
     def forward(self, x):
         out = self.block1(x)
-        out = self.block2(out)
-        out = x + self.relu(out)
+        out = x + self.block2(out)
         return out
