@@ -2,6 +2,7 @@ import torch
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 import numpy as np
+from torch_lr_finder import LRFinder
 
 def print_featuremaps_hook(self, input, output):
       # Detach one output feature map (one channel)
@@ -80,3 +81,32 @@ def test(model, device, test_loader, criterion):
         100. * test_succeeded / len(test_loader.dataset)))
     
     return test_succeeded, test_loss
+
+
+def get_lr(
+    model,
+    train_loader,
+    optimizer,
+    criterion,
+    device,
+    end_lr=1,
+    num_iter=100,
+    step_mode="exp",
+    start_lr=None,
+    diverge_th=5,
+):
+    lr_finder = LRFinder(model, optimizer, criterion, device=device)
+    lr_finder.range_test(
+        train_loader,
+        end_lr=end_lr,
+        num_iter=num_iter,
+        step_mode=step_mode,
+        start_lr=start_lr,
+        diverge_th=diverge_th,
+    )
+    _, max_lr = lr_finder.plot(log_lr=False, suggest_lr=True)
+
+    # Reset the model and optimizer to initial state
+    lr_finder.reset()
+
+    return max_lr
