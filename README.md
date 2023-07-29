@@ -23,12 +23,12 @@ Folder Structure
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/janakg/era-s10.git
+   git clone https://github.com/janakg/era-10.git
 
 2. **Open the main Notebook in the Collab**
 
     ```bash
-    https://colab.research.google.com/github/janakg/era-s10/blob/main/S10.ipynb
+    https://colab.research.google.com/github/janakg/era-10/blob/main/S10.ipynb
 
 3. **For local modules, we load the Github repo by cloning or pulling the code**
 
